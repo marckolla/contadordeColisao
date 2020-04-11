@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #dv{
+            position: absolute;
+            left: 275px;
+            top: 350px;
+            background-color: #f00;
+            width: 50px;
+            height: 50px;
+        }
+        #dprin{
+            position: absolute;
+            left: 350px;
+            top: 100px;
+            width: 600px;
+            height: 400px;
+            background-color: #888;
+            overflow: hidden;
+        }
+        #ini{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            left: 400px;
+            top: 0px;
+            background-color: #000;
+        }
+        p{
+            font-size: 30px;
+            color: #f00;
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="dprin">
+    <div id="dv"></div>
+    <div id="ini"></div>
+    </div>
+    <p id="veric">números de colisões: </p>
+    <script>
+        var vecoli = document.getElementById("veric");
+        var dv = document.getElementById("dv");
+        var idv = document.getElementById("ini");
+        var px = 275;//eixo x do objeto 1
+        var py = 350;//eixo y do objeto 1 'div q anda'
+        var vel = 10;
+        var ipx = 400;////eixo x do objeto 2
+        var ipy = 0;//eixo y do objeto 2 
+        var con = 0;
+        function colisao(){
+            if(px +50 > ipx &&  px < ipx + 50 && py + 50 > ipy && py < ipy + 50){//parte da colisão
+                idv.style.backgroundColor="orange";
+                con++
+                vecoli.innerHTML="números de colisões: "+con;
+                ipy = -50;
+                ipx = Math.round(Math.random() * 550);
+            }
+                
+        }
+        function moviventaobjeto(){ 
+            ipy += 3;
+            px += 3;
+            if(px >= 600){
+                    px = -50;
+            }
+           
+            dv.style.left=px+"px";
+
+            if(ipy >= 400){
+                ipy = -50;
+                ipx = Math.round(Math.random() * 550);
+                idv.style.backgroundColor="black";
+            }
+            idv.style.top=ipy+"px";
+            idv.style.left=ipx+"px";
+            colisao()
+        }
+        setInterval(moviventaobjeto,10);
+
+        
+        function andar(){
+            var tecla = event.keyCode;
+            switch(tecla){
+                case 37:
+                if(px <= -50){
+                    px = 600;
+                }
+                    px -= vel;
+                    dv.style.left=px+"px";
+                 
+                break;
+                case 38:
+                if(py < -50){
+                    py = 400;
+                }
+                    py -= vel;
+                    dv.style.top=py+"px";
+                   
+                break;
+                case 39:
+                if(px >= 600){
+                    px = -50;
+                }
+                    px += vel;
+                    dv.style.left=px+"px";
+                   
+                break;
+                case 40:
+                if(py >= 400){
+                    py = -50
+                }
+                    py += vel;
+                    dv.style.top=py+"px";
+                    
+                break;
+            }
+            colisao()
+        }
+       
+
+
+
+        window.addEventListener("keydown",andar);
+  
+    
+    
+    
+    </script>
+</body>
+</html>
